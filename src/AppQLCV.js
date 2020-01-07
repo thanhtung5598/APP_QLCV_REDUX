@@ -9,9 +9,6 @@ class AppQLCV extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            task: [
-
-            ], // id name , status
             isDisplayForm: false,
             taskEditting: null,
             filter: {
@@ -30,38 +27,6 @@ class AppQLCV extends Component {
             });
         }
     }
-    // onGenerateData = () =>{
-    //     var task=[
-    //         {
-    //             id: this.guild(),
-    //             name:'Trinh',
-    //             status:true
-    //         },
-    //         {
-    //             id: this.guild(),
-    //             name:'Uyên',
-    //             status:false
-    //         },
-    //         {
-    //             id: this.guild(),
-    //             name:'Nhi',
-    //             status:true
-    //         }
-    //     ];
-    //     this.setState({
-    //         task:task
-    //     });
-    //     localStorage.setItem('lover',JSON.stringify(task));
-    // }
-
-    // Random chain string
-    s4() {
-        return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-    }
-    guild() {
-        return this.s4() + '-' + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' + this.s4();
-    }
-
     // Show form when user click add form
     onToggleForm = () => {
         if (this.state.isDisplayForm && this.state.taskEditting != null) {
@@ -83,23 +48,6 @@ class AppQLCV extends Component {
         this.setState({
             isDisplayForm: false
         });
-    }
-
-    taskValueNew = (data) => {
-        var { task } = this.state;
-        if (data.id === '') {
-            data.id = this.guild();
-            task.push(data); // object data push into task
-        } else {
-            // Editting
-            var index = this.findIndex(data.id);
-            task[index] = data;
-        }
-        this.setState({
-            task: task,
-            taskEditting: null
-        });
-        localStorage.setItem('lover', JSON.stringify(task))
     }
 
     onUpdateStatus = (id) => {
@@ -219,7 +167,8 @@ class AppQLCV extends Component {
             <div className="container">
                 <center><h1> Quẩn lý công việc </h1></center>
                 <div className="row">
-                    <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4" > {elementForm} </div> <div className={isDisplayForm ? "col-xs-8 col-sm-8 col-md-8 col-lg-8" : "col-xs-12 col-sm-12 col-md-12 col-lg-12"} > { /* Button add */} <button type="button"
+                    <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4" > {elementForm} </div>
+                    <div className={isDisplayForm ? "col-xs-8 col-sm-8 col-md-8 col-lg-8" : "col-xs-12 col-sm-12 col-md-12 col-lg-12"} > { /* Button add */} <button type="button"
                         className="btn btn-primary"
                         onClick={this.onToggleForm} >
                         <span className="glyphicon glyphicon-plus" > </span>&nbsp;Thêm công việc </button> {
@@ -229,7 +178,8 @@ class AppQLCV extends Component {
                         } { /* Button add */}
 
                         { /* Search and Sort */} 
-                        <Control onSearch={this.onSearch}
+                        <Control 
+                            onSearch={this.onSearch}
                             onSort={this.onSort}
                             sortBy={sortBy}
                             sortValue={sortValue}

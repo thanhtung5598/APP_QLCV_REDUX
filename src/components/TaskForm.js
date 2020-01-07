@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
+import * as actions from "./../actions/index";
 
 class TaskForm extends Component {
     constructor(props){
@@ -47,7 +49,7 @@ class TaskForm extends Component {
     }
     onSubmitted=(event)=>{
         event.preventDefault();
-        this.props.onSubmmitReceivedValue(this.state)
+        this.props.onAddTask(this.state)
         this.setFormClose();
         this.closeForm();
     }
@@ -111,5 +113,15 @@ class TaskForm extends Component {
         );
     }
 }
+const mapStateToProps = (state) =>{
+    return{};
+};
+const mapDispatchToProps = (dispatch,props) =>{
+    return{
+        onAddTask: (task) => {
+            dispatch(actions.addTask(task));
+        }
+    };
+};
 
-export default TaskForm;
+export default connect(mapStateToProps,mapDispatchToProps)(TaskForm);
