@@ -5,11 +5,13 @@ import Control from "./components/Control";
 import TaskList from "./components/TaskList";
 import { findIndex } from "lodash";
 
+import * as actions from "./actions/index";
+import { connect } from "react-redux";
+
 class AppQLCV extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isDisplayForm: false,
             taskEditting: null,
             filter: {
                 name: '',
@@ -29,25 +31,7 @@ class AppQLCV extends Component {
     }
     // Show form when user click add form
     onToggleForm = () => {
-        if (this.state.isDisplayForm && this.state.taskEditting != null) {
-            this.setState({
-                isDisplayForm: true,
-                taskEditting: null
-            });
-        } else {
-            this.setState({
-                isDisplayForm: !this.state.isDisplayForm,
-                taskEditting: null
-            });
-        }
-
-    }
-
-    //Close form when user click close
-    onCloseForm = () => {
-        this.setState({
-            isDisplayForm: false
-        });
+        this.props.onToggleForm();
     }
 
     onUpdateStatus = (id) => {
@@ -123,11 +107,20 @@ class AppQLCV extends Component {
     }
 
     render() {
-        var { task, isDisplayForm, taskEditting, filter, keyword, sortBy, sortValue } = this.state; // var task = this.state.task
+        var { 
+            task, 
+            taskEditting, 
+            filter, 
+            keyword, 
+            sortBy, 
+            sortValue 
+        } = this.state; // var task = this.state.task
+        
+        var {isDisplayForm}=this.props; // props on redux
+
         var elementForm = isDisplayForm ?
             < TaskForm
                 task={taskEditting}
-                onCloseForm={this.onCloseForm}
                 onSubmmitReceivedValue={this.taskValueNew}
             /> : '';
         //  If isDisplayForm === true, show form for user
@@ -199,4 +192,18 @@ class AppQLCV extends Component {
     }
 }
 
-export default AppQLCV;
+const mapStateToProps = (state)=>{
+    return{
+        isDisplayForm:state.isDisplayForm
+    }
+}
+
+const mapDispatchToProps = (dispatch,props)=>{
+    return{
+        onToggleForm: () =>{
+            dispatch(actions.toggleForm());
+        }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(AppQLCV);
