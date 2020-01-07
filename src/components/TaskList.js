@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import TaskItem from "./TaskItem";
+import { connect } from "react-redux";
+
 class TaskList extends Component {
     constructor(props) {
         super(props);
@@ -20,8 +22,8 @@ class TaskList extends Component {
         });
     }
     render() {
-        var { tasksTr } = this.props // taskTr = this.props.taskTr
-        var element = tasksTr.map((task, index) => {
+        var {tasks} = this.props;
+        var element = tasks.map((task, index) => {
             return <TaskItem
                 onUpdateStatus={this.props.onUpdateStatus}
                 key={task.id} index={index}
@@ -72,4 +74,10 @@ class TaskList extends Component {
     }
 }
 
-export default TaskList;
+const mapStateToProps = (state) => {
+    return {
+        tasks:state.Tasks
+    }
+}
+
+export default connect(mapStateToProps,null)(TaskList);
