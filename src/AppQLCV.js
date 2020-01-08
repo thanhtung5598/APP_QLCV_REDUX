@@ -3,7 +3,7 @@ import './index.css';
 import TaskForm from "./components/TaskForm";
 import Control from "./components/Control";
 import TaskList from "./components/TaskList";
-import { findIndex } from "lodash";
+// import { findIndex } from "lodash";
 
 import * as actions from "./actions/index";
 import { connect } from "react-redux";
@@ -22,43 +22,13 @@ class AppQLCV extends Component {
             sortValue: 1
         }
     }
-    componentWillMount() {
-        if (localStorage && localStorage.getItem('lover')) {
-            this.setState({
-                task: JSON.parse(localStorage.getItem('lover'))
-            });
-        }
-    }
+    
     // Show form when user click add form
     onToggleForm = () => {
         this.props.onToggleForm();
     }
 
-    onUpdateStatus = (id) => {
-        var { task } = this.state;
-        // var index = this.findIndex(id); // find ID
-        var index = findIndex(task, (task) => {
-            return task.id === id
-        })
-        if (index !== -1) {
-            task[index].status = !task[index].status;
-            this.setState({
-                task: task
-            });
-        }
-        localStorage.setItem('lover', JSON.stringify(task));
-    }
-
-    findIndex = (id) => {
-        var { task } = this.state; // all array
-        var result = -1;
-        task.forEach((task, index) => {
-            if (task.id === id) {
-                return result = index;
-            }
-        })
-        return result;
-    }
+  
 
     removeItem = (id) => {
         var index = this.findIndex(id);
@@ -108,10 +78,9 @@ class AppQLCV extends Component {
 
     render() {
         var { 
-            task, 
             taskEditting, 
-            filter, 
-            keyword, 
+            // filter, 
+            // keyword, 
             sortBy, 
             sortValue 
         } = this.state; // var task = this.state.task
@@ -124,37 +93,37 @@ class AppQLCV extends Component {
                 onSubmmitReceivedValue={this.taskValueNew}
             /> : '';
         //  If isDisplayForm === true, show form for user
-        if (filter.name) {
-            task = task.filter((task) => {
-                return task.name.toLowerCase().indexOf(filter.name) !== -1 // used indexOf to find String
-            });
-        }
-        if (keyword) {
-            task = task.filter((task) => {
-                return task.name.toLowerCase().indexOf(keyword) !== -1
-            });
-        }
-        task = task.filter((task) => {
-            if (filter.status === -1) {
-                return task;
-            } else {
-                return task.status === (filter.status === 1 ? true : false)
-            }
-        });
+        // if (filter.name) {
+        //     task = task.filter((task) => {
+        //         return task.name.toLowerCase().indexOf(filter.name) !== -1 // used indexOf to find String
+        //     });
+        // }
+        // if (keyword) {
+        //     task = task.filter((task) => {
+        //         return task.name.toLowerCase().indexOf(keyword) !== -1
+        //     });
+        // }
+        // task = task.filter((task) => {
+        //     if (filter.status === -1) {
+        //         return task;
+        //     } else {
+        //         return task.status === (filter.status === 1 ? true : false)
+        //     }
+        // });
 
-        if (sortBy === 'name') {
-            task.sort((a, b) => {
-                if (a.name > b.name) return sortValue;
-                else if (a.name < b.name) return -sortValue;
-                else return 0;
-            });
-        } else {
-            task.sort((a, b) => {
-                if (a.status > b.status) return -sortValue;
-                else if (a.status < b.status) return sortValue;
-                else return 0;
-            });
-        }
+        // if (sortBy === 'name') {
+        //     task.sort((a, b) => {
+        //         if (a.name > b.name) return sortValue;
+        //         else if (a.name < b.name) return -sortValue;
+        //         else return 0;
+        //     });
+        // } else {
+        //     task.sort((a, b) => {
+        //         if (a.status > b.status) return -sortValue;
+        //         else if (a.status < b.status) return sortValue;
+        //         else return 0;
+        //     });
+        // }
 
         return (
             <div className="container">
@@ -182,7 +151,6 @@ class AppQLCV extends Component {
                         <TaskList 
                             filterTask={this.filterTask}
                             removeItem={this.removeItem}
-                            onUpdateStatus={this.onUpdateStatus}
                             updateTask={this.updateTask}
                         /> { /* Table */} 
                         </div> 
