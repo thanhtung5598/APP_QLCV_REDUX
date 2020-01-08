@@ -8,9 +8,11 @@ class TaskItem extends Component {
         this.props.onUpdateStatus(this.props.taskIt.id) // props.onUpdateStatus from redux
     }
 
-    onRemove = () => {
-        this.props.removeItem(this.props.taskIt.id)
+    onDeleteTask = () => {
+        this.props.onDeleteTaskItem(this.props.taskIt.id);
+        this.props.onCloseForm();
     }
+
     onUpdateValue = () => {
         this.props.updateTask(this.props.taskIt.id)
     }
@@ -37,7 +39,7 @@ class TaskItem extends Component {
                     <button
                         type="button"
                         className="btn btn-danger"
-                        onClick={this.onRemove}
+                        onClick={this.onDeleteTask}
                     ><span className="glyphicon glyphicon-remove"></span>&nbsp;Xóa</button>
                 </td>
             </tr>
@@ -53,6 +55,12 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         onUpdateStatus: (id) => {
             dispatch(actions.updateStatus(id));
+        },
+        onDeleteTaskItem: (id) =>{
+            dispatch(actions.deleteTask(id));
+        },
+        onCloseForm: () =>{
+            dispatch(actions.closeForm());
         }
     };
 };

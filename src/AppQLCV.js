@@ -27,22 +27,7 @@ class AppQLCV extends Component {
     onToggleForm = () => {
         this.props.onToggleForm();
     }
-
   
-
-    removeItem = (id) => {
-        var index = this.findIndex(id);
-        var { task } = this.state;
-        if (index !== -1) {
-            task.splice(index, 1);
-            this.setState({
-                task: task
-            });
-        }
-        localStorage.setItem('lover', JSON.stringify(task));
-        this.onCloseForm();
-    }
-
     updateTask = (id) => {
         var index = this.findIndex(id);
         var { task } = this.state;
@@ -150,7 +135,6 @@ class AppQLCV extends Component {
                         { /* Table */} 
                         <TaskList 
                             filterTask={this.filterTask}
-                            removeItem={this.removeItem}
                             updateTask={this.updateTask}
                         /> { /* Table */} 
                         </div> 
