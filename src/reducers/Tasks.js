@@ -26,12 +26,18 @@ const myReducer = (state = initialState, action) => {
         case types.LIST_ALL:
             return state;
         case types.ADD_TASK:
-            let newTask = {
-                id:guild(),
+            let Task = {
+                id:action.task.id,
                 name:action.task.name,
-                statue:action.task.status
+                status:action.task.status
             }
-            state.push(newTask);
+            if(!Task.id){
+                Task.id=guild();
+                state.push(Task);
+            }else{
+                index= findIndex(state,Task.id);
+                state[index]=Task
+            }
             localStorage.setItem('lover',JSON.stringify(state));
             return [...state];
         case types.UPDATE_STATUS_TASKS:

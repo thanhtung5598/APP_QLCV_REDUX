@@ -8,7 +8,7 @@ class TaskForm extends Component {
         this.state = {
             id:'',
             name:'',
-            status:true
+            status:false
         };
     }
     onChangeValue=(event)=>{
@@ -22,34 +22,26 @@ class TaskForm extends Component {
             [name]:value
         });
     } 
-    componentWillMount(props){
-        if(this.props.task){
-            this.setState({
-                id:this.props.task.id, // transfer infomation to form
-                name:this.props.task.name,
-                status:this.props.task.id
-            });
-        }
-    }
+    
     componentWillReceiveProps(nextProps){
-        if(nextProps && nextProps.task){
+        if(nextProps && nextProps.taskEditting){
             this.setState({
-                id:nextProps.task.id, // transfer infomation to form
-                name:nextProps.task.name,
-                status:nextProps.task.id
+                id:nextProps.taskEditting.id, // transfer infomation to form
+                name:nextProps.taskEditting.name,
+                status:nextProps.taskEditting.status
             });
         }
-        if(!nextProps.task){
+        if(!nextProps.taskEditting){
             this.setState = {
                 id:'',
                 name:'',
-                status:true
+                status:false
             };
         }
     }
     onSubmitted=(event)=>{
         event.preventDefault();
-        this.props.onAddTask(this.state)
+        this.props.onSaveTask(this.state)
         this.setFormClose();
         this.closeForm();
     }
@@ -64,7 +56,10 @@ class TaskForm extends Component {
         })
     }
     render() {
-        var {id}=this.state
+        var {id}=this.state 
+        var {isDisplayForm}=this.props
+
+        if(!isDisplayForm) return null;
         return (
             <div className="panel panel-default">
                 <div className="panel-heading">
@@ -114,12 +109,15 @@ class TaskForm extends Component {
     }
 }
 const mapStateToProps = (state) =>{
-    return{};
+    return{
+        isDisplayForm:state.isDisplayForm,
+        taskEditting:state.taskEditting
+    };
 };
 const mapDispatchToProps = (dispatch,props) =>{
     return{
-        onAddTask: (task) => {
-            dispatch(actions.addTask(task));
+        onSaveTask: (task) => {
+            dispatch(actions.saveTask(task));
         },
         onCloseForm: () =>{
             dispatch(actions.closeForm());

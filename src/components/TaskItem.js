@@ -13,8 +13,9 @@ class TaskItem extends Component {
         this.props.onCloseForm();
     }
 
-    onUpdateValue = () => {
-        this.props.updateTask(this.props.taskIt.id)
+    onEditTaskItem = () => {
+        this.props.onOpenForm();
+        this.props.onEditTaskItem(this.props.taskIt);
     }
     render() {
         var { taskIt, index } = this.props
@@ -34,7 +35,7 @@ class TaskItem extends Component {
                     <button
                         type="button"
                         className="btn btn-warning"
-                        onClick={this.onUpdateValue}
+                        onClick={this.onEditTaskItem}
                     ><span className="glyphicon glyphicon-pencil"></span>&nbsp;Sửa</button> &nbsp;
                     <button
                         type="button"
@@ -61,7 +62,13 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         onCloseForm: () =>{
             dispatch(actions.closeForm());
-        }
+        },
+        onEditTaskItem:(task)=>{
+            dispatch(actions.editTask(task));
+        },
+        onOpenForm:()=>{
+            dispatch(actions.openForm());
+        },
     };
 };
 
