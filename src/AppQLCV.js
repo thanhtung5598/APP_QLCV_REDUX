@@ -71,24 +71,11 @@ class AppQLCV extends Component {
         var {isDisplayForm}=this.props; // props on redux
 
         //  If isDisplayForm === true, show form for user
-        // if (filter.name) {
-        //     task = task.filter((task) => {
-        //         return task.name.toLowerCase().indexOf(filter.name) !== -1 // used indexOf to find String
-        //     });
-        // }
         // if (keyword) {
         //     task = task.filter((task) => {
         //         return task.name.toLowerCase().indexOf(keyword) !== -1
         //     });
         // }
-        // task = task.filter((task) => {
-        //     if (filter.status === -1) {
-        //         return task;
-        //     } else {
-        //         return task.status === (filter.status === 1 ? true : false)
-        //     }
-        // });
-
         // if (sortBy === 'name') {
         //     task.sort((a, b) => {
         //         if (a.name > b.name) return sortValue;

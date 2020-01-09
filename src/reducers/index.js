@@ -1,12 +1,14 @@
 import { combineReducers } from "redux";
-import Tasks from "./Tasks";
+import tasks from "./tasks";
 import isDisplayForm from "./isDisplayForm";
 import taskEditting from "./taskEditting";
+import filterTable from "./filterTable";
 
 const myReducer = combineReducers({
-    Tasks,
+    tasks,
     isDisplayForm,
-    taskEditting
+    taskEditting,
+    filterTable
 });
 
 export default myReducer;
