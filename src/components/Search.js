@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
+import * as actions from "./../actions/index";
 
 class Search extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            search:''
+            keyword:''
         }
     }
     
@@ -16,11 +18,11 @@ class Search extends Component {
             [name]:value
         });
     }
-    onClick=()=>{
-        this.props.onSearch(this.state.search)
+    onSearchTask=()=>{
+        this.props.onSearch(this.state.keyword)
     }
     render() {
-        var {search} = this.state
+        var {keyword} = this.state
         return (
             <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                 <div className="input-group">
@@ -28,15 +30,15 @@ class Search extends Component {
                         type="text" 
                         className="form-control" 
                         placeholder="Nhập từ khóa..." 
-                        name='search'
-                        value={search}
+                        name='keyword'
+                        value={keyword}
                         onChange={this.onChange}
                     />
                     <span className="input-group-btn">
                         <button 
                             type="button" 
                             className="btn btn-primary"
-                            onClick={this.onClick}
+                            onClick={this.onSearchTask}
                         ><span className="glyphicon glyphicon-search" />&nbsp;Tìm!</button>
                     </span>
                 </div>
@@ -45,4 +47,15 @@ class Search extends Component {
     }
 }
 
-export default Search;
+const mapStateToProps = (state) =>{
+    return{};
+};
+const mapDispatchToProps = (dispatch,props) =>{
+    return{
+        onSearch: (keyword) => {
+            dispatch(actions.searchTask(keyword));
+        }
+    };
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(Search);
